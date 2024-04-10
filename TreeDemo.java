@@ -11,34 +11,39 @@ different methods and committing accordingly upload to
 a local GitHub repository and submit to canvas. */
 
 
+//imports
 import java.util.ArrayList;
 import java.util.Stack;
 
 class Node{
+   //fields
    int value;
    Node left, right;
-   
+
+   //constructor
    public Node(int value){
       this.value = value;
       left = null;
       right = null;
    }
-
 }
 
 class BinarySearchTree{
 
-   //required field
+   //field
    public Node root;
 
    //constructor
    public BinarySearchTree(Node root) {
       this.root = root; //set node passed in as root
    }
+
    
-   
-   /*
-   recursive insert method
+   /**
+      Recursive insert method that will add values to the bst.
+      @param root is a node that will be used to traverse the entire tree since it is the start.
+      @param value is a node value that the user is looking for.
+      @return a Node that corresponds to the root of the updated bst.
    */
    public Node insert(Node root, int value){
       //base case
@@ -54,6 +59,7 @@ class BinarySearchTree{
          root.right = insert(root.right, value);
       }
 
+      //return root
       return root;
    }
 
@@ -224,20 +230,42 @@ class BinarySearchTree{
    }
 
    
-   /*
-   a method to find the node in the tree
-   with a specific value
-   */
+   /**
+      A method to find the node in the tree with a specific value.
+      @param root is a node that will be used to traverse the entire tree since it is the start.
+      @param key is a node value that the user is looking for.
+      @return a boolean value that dictates whether the value was in the tree or not.
+    */
    public boolean find(Node root, int key){
-	  //implement me
-      return false;           
+
+      //check if root is equal to null
+      if(root == null)
+      {
+         return false; //return false
+      }
+
+      //check if root value is equal to the given key
+      if(root.value == key)
+      {
+         return true; //return true
+      }
+
+      //check if given key is less than the root value
+      if(key < root.value)
+      {
+         return find(root.left, key); //recursive call updating the root to it's left child
+      }
+      else
+      {
+         return find(root.right, key); //recursive call updating the root to it's right child
+      }
    }
-   
-   
+
    
    /**
       A method to find the node in the tree with the smallest value.
       @param root is a node that will be used to traverse the entire tree since it is the start.
+      @return an int value that corresponds to the minimum value in the bst.
    */
    public int getMin(Node root){
 
@@ -260,10 +288,11 @@ class BinarySearchTree{
    }
   
   
-  
    /**
       A method to find the node in the tree with the largest value.
-   */
+      @param root is a node that will be used to traverse the entire tree since it is the start.
+      @return an int value that corresponds to the maximum value in the bst.
+    */
    public int getMax(Node root){
 
       //check if root is null
@@ -284,16 +313,18 @@ class BinarySearchTree{
       return temp.value;
    }
    
-   
-   
-   /*
-   this method will not compile until getMax
-   is implemented
+
+   /**
+      This method will delete nodes if inside the bst.
+      @param root is a node that will be used to traverse the entire tree since it is the start.
+      @param key is a node value that the user is looking for.
+      @return a Node that corresponds to the root of the updated bst.
    */
    public Node delete(Node root, int key){
-      
+
+      //check if root is null
       if(root == null){
-         return root;
+         return root; //return root
       }else if(key < root.value){
          root.left = delete(root.left, key);
       }else if(key > root.value){
@@ -315,10 +346,11 @@ class BinarySearchTree{
             root.left = delete(root.left, root.value);
          }
       }
+
+      //return root
       return root;  
    }
 }
-
 
 
 public class TreeDemo{
@@ -370,6 +402,18 @@ public class TreeDemo{
 
       System.out.println(); //used for formatting
 
+      //-------------- find --------------
+      System.out.println("-------------------------------"); //used for formatting
+      System.out.print("is 80 apart of the bst? t/f : "); //print statement
+      //call find method that returns a boolean in regard to whether the key is in the bst or not
+      System.out.println(t1.find(t1.root, 80));
 
+      System.out.print("is 4 apart of the bst? t/f : "); //print statement
+      //call find method that returns a boolean in regard to whether the key is in the bst or not
+      System.out.println(t1.find(t1.root, 4));
+
+      System.out.print("is 22 apart of the bst? t/f : "); //print statement
+      //call find method that returns a boolean in regard to whether the key is in the bst or not
+      System.out.println(t1.find(t1.root, 22));
    }  
 }
