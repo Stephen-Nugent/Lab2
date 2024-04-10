@@ -57,17 +57,49 @@ class BinarySearchTree{
       return root;
    }
    
-   
-   
-   /*
-   pre-order traversal node, left, right
-   */
-   public void preOrderTraversal(Node root){
-      //implement me
 
+   /**
+    A method that uses pre-order traversal which can be thought of as node, left, right. This means that the
+    print statement that will occur inside the method will read a node, then go left, and once it can't go left
+    anymore it will try to go right or return to the previous node.
+    @param root is a node that represents the root of the bst that will be traversed in-order.
+    */
+   public void preOrderTraversal(Node root){
+
+      //check if root is initially null and if true inform user that the tree is empty
+      if (root == null) {
+         System.out.println("BST is empty...");
+         return; //if this point is reached then leave the method early
+      }
+
+      //create stack to hold nodes
+      Stack<Node> stack = new Stack<>();
+      //create arraylist that will hold the node values in the correct order according to the traversal being used
+      ArrayList<Integer> orderList = new ArrayList<>();
+
+      //for loop to iterate through tree
+      for (Node node = root;;) {
+         //check if node is null
+         if (node == null) {
+            //if stack is empty then break out of the loop
+            if (stack.empty()) break;
+
+            //if this point is reached pop the stack
+            node = stack.pop();
+            node = node.right; //update node
+         } else {
+            orderList.add(node.value); //add value to arraylist
+            stack.push(node); //add node to stack
+            node = node.left; //update node
+         }
+      }
+
+      //for loop to iterate through arraylist and print values
+      for (Integer integer : orderList) {
+         System.out.print(integer + " ");
+      }
    }
 
-   
    
    /**
       A method that uses in-order traversal which can be thought of as left, node, right. This means that the
@@ -204,9 +236,15 @@ public class TreeDemo{
       t1.insert(t1.root,9);
       t1.insert(t1.root,90);
       t1.insert(t1.root,22);
-            
+
+      //print in-order results to user
       System.out.print("in-order : ");
       t1.inOrderTraversal(t1.root);
+      System.out.println();
+
+      ////print pre-order results to user
+      System.out.print("pre-order : ");
+      t1.preOrderTraversal(t1.root);
       System.out.println();
            
       
