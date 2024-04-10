@@ -141,9 +141,9 @@ class BinarySearchTree{
       }
 
       //for loop to iterate through arraylist and print values
-       for (Integer integer : orderList) {
-           System.out.print(integer + " ");
-       }
+      for (Integer integer : orderList) {
+         System.out.print(integer + " ");
+      }
    }
 
 
@@ -240,8 +240,23 @@ class BinarySearchTree{
    with a smallest key
    */
    public int getMin(Node root){
-      //implement me
-      return root.value;
+
+      if (root == null) {
+         System.out.println("BST is empty...");
+         return Integer.MIN_VALUE; //return val that will act as a flag signifying that the bst is empty
+      }
+
+      //create temp node
+      Node temp = root;
+
+      //while loop that will continue until we've gone as far left as possible
+      while (temp.left != null) {
+         temp = temp.left; //update temp
+      }
+
+      //return temp value which should be the minimum value
+      return temp.value;
+
    }
   
   
@@ -305,19 +320,29 @@ public class TreeDemo{
       t1.insert(t1.root,90);
       t1.insert(t1.root,22);
 
-      //print in-order results to user
-      System.out.print("in-order : ");
-      t1.inOrderTraversal(t1.root);
-      System.out.println();
+      //-------------- in-order --------------
+
+      System.out.print("in-order : "); //print statement
+      t1.inOrderTraversal(t1.root); //call inOrderTraversal method that prints results
+      System.out.println(); //used for formatting
+
+      //-------------- pre-order --------------
 
       //print pre-order results to user
       System.out.print("pre-order : ");
-      t1.preOrderTraversal(t1.root);
-      System.out.println();
+      t1.preOrderTraversal(t1.root); //call preOrderTraversal method that prints results
+      System.out.println(); //used for formatting
+
+      //-------------- post-order --------------
 
       //print post-order results to user
       System.out.print("post-order : ");
-      t1.postOrderTraversal(t1.root);
-      System.out.println();
+      t1.postOrderTraversal(t1.root); //call postOrderTraversal method that prints results
+      System.out.println(); //used for formatting
+
+      //-------------- getMin --------------
+      System.out.println("-------------------------------"); //used for formatting
+      System.out.print("min value found in the tree : ");
+      System.out.println(t1.getMin(root));
    }  
 }
