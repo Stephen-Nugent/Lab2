@@ -235,14 +235,15 @@ class BinarySearchTree{
    
    
    
-   /*
-   a method to find the node in the tree
-   with a smallest key
+   /**
+      A method to find the node in the tree with the smallest value.
+      @param root is a node that will be used to traverse the entire tree since it is the start.
    */
    public int getMin(Node root){
 
+      //check if root is null
       if (root == null) {
-         System.out.println("BST is empty...");
+         System.out.println("BST is empty..."); //inform the user that the BST was empty based off of the root provided
          return Integer.MIN_VALUE; //return val that will act as a flag signifying that the bst is empty
       }
 
@@ -256,18 +257,31 @@ class BinarySearchTree{
 
       //return temp value which should be the minimum value
       return temp.value;
-
    }
   
   
   
-   /*
-   a method to find the node in the tree
-   with a largest key
+   /**
+      A method to find the node in the tree with the largest value.
    */
    public int getMax(Node root){
-	  //implement me
-      return root.value;
+
+      //check if root is null
+      if (root == null) {
+         System.out.println("BST is empty..."); //inform the user that the BST was empty based off of the root provided
+         return Integer.MAX_VALUE; //return val that will act as a flag signifying that the bst is empty
+      }
+
+      //create temp node
+      Node temp = root;
+
+      //while loop that will continue until we've gone as far right as possible
+      while (temp.right != null) {
+         temp = temp.right; //update temp
+      }
+
+      //return temp value which should be the minimum value
+      return temp.value;
    }
    
    
@@ -303,9 +317,6 @@ class BinarySearchTree{
       }
       return root;  
    }
-   
-   
-   
 }
 
 
@@ -342,7 +353,23 @@ public class TreeDemo{
 
       //-------------- getMin --------------
       System.out.println("-------------------------------"); //used for formatting
-      System.out.print("min value found in the tree : ");
-      System.out.println(t1.getMin(root));
+      int min = t1.getMin(root); //declare int value to hold min
+
+      //check if min is not equal to Integer.MIN_VALUE
+      if(min != Integer.MIN_VALUE)
+         System.out.print("min value found in the tree : " + min); //display results
+
+      System.out.println(); //used for formatting
+
+      //-------------- getMax --------------
+      int max = t1.getMax(root); //declare int value to hold min
+
+      //check if min is not equal to Integer.MAX_VALUE
+      if(max != Integer.MAX_VALUE)
+         System.out.print("max value found in the tree : " + max); //display results
+
+      System.out.println(); //used for formatting
+
+
    }  
 }
