@@ -56,13 +56,13 @@ class BinarySearchTree{
 
       return root;
    }
-   
+
 
    /**
     A method that uses pre-order traversal which can be thought of as node, left, right. This means that the
     print statement that will occur inside the method will read a node, then go left, and once it can't go left
     anymore it will try to go right or return to the previous node.
-    @param root is a node that represents the root of the bst that will be traversed in-order.
+    @param root is a node that represents the root of the bst that will be traversed pre-order.
     */
    public void preOrderTraversal(Node root){
 
@@ -145,16 +145,84 @@ class BinarySearchTree{
            System.out.print(integer + " ");
        }
    }
-   
-   
-   /*
-   post-order traversal left, right, node,
-   */
+
+
+   /**
+    A method that uses post-order traversal which can be thought of as left, right, node. This means that the
+    print statement that will occur inside the method will go left, then right, and once it can't any further
+    read the node, then return to the previous node.
+    @param root is a node that represents the root of the bst that will be traversed post-order.
+    */
    public void postOrderTraversal(Node root){
-      //implement me
+
+      //check if root is initially null and if true inform user that the tree is empty
+      if (root == null) {
+         System.out.println("BST is empty...");
+         return; //if this point is reached then leave the method early
+      }
+
+      //create stack to hold nodes
+      Stack<Node> stack = new Stack<>();
+      //create stack to keep track of visits
+      Stack<Integer> stackVisit = new Stack<>();
+      //create arraylist that will hold the node values in the correct order according to the traversal being used
+      ArrayList<Integer> orderList = new ArrayList<>();
+
+      //set up stacks initially
+      stack.push(root);
+      stackVisit.push(0);
+
+      //while loop that will continue until the stack is empty
+      while (!stack.empty())
+      {
+         //get int val representing amount of visits
+         int visit = stackVisit.pop();
+         Node node = stack.peek(); //peek the top node
+
+         //check if visit is 0
+         if (visit == 0)
+         {
+            // First visit.
+            stackVisit.push(1);
+
+            //check if node to the left is not null
+            if (node.left != null)
+            {
+               //push left node onto stack
+               stack.push(node.left);
+               stackVisit.push(0); //push 0 for visit count
+            }
+         }
+         //check if visit is 1
+         else if (visit == 1)
+         {
+            // Second visit.
+            // Left subtree done.
+            stackVisit.push(2); //push 2 for visit count
+
+            //check if node to the left is not null
+            if (node.right != null)
+            {
+               //push right node onto stack
+               stack.push(node.right);
+               stackVisit.push(0); //push 0 for visit count
+            }
+         }
+         else // visit >= 2
+         {
+            // Third visit.
+            // Right subtree done.
+            stack.pop(); //pop node from stack
+            orderList.add(node.value); //add value to arraylist
+         }
+      }
+
+      //for loop to iterate through arraylist and print values
+      for (Integer integer : orderList) {
+         System.out.print(integer + " ");
+      }
    }
-   
-   
+
    
    /*
    a method to find the node in the tree
@@ -242,11 +310,14 @@ public class TreeDemo{
       t1.inOrderTraversal(t1.root);
       System.out.println();
 
-      ////print pre-order results to user
+      //print pre-order results to user
       System.out.print("pre-order : ");
       t1.preOrderTraversal(t1.root);
       System.out.println();
-           
-      
+
+      //print post-order results to user
+      System.out.print("post-order : ");
+      t1.postOrderTraversal(t1.root);
+      System.out.println();
    }  
 }
