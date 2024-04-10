@@ -11,6 +11,9 @@ different methods and committing accordingly upload to
 a local GitHub repository and submit to canvas. */
 
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 class Node{
    int value;
    Node left, right;
@@ -66,13 +69,50 @@ class BinarySearchTree{
 
    
    
-   /*
-   in-order traversal left, node, right
+   /**
+      A method that uses in-order traversal which can be thought of as left, node, right. This means that the
+      print statement that will occur inside the method will read the tree from smallest to largest values.
+      @param root is a node that represents the root of the bst that will be traversed in-order.
    */
    public void inOrderTraversal(Node root){
-      //implement me
+
+      //check if root is initially null and if true inform user that the tree is empty
+      if (root == null) {
+         System.out.println("BST is empty...");
+         return; //if this point is reached then leave the method early
+      }
+
+      //create stack to hold nodes
+      Stack<Node> stack = new Stack<>();
+      //create arraylist that will hold the node values in the correct order according to the traversal being used
+      ArrayList<Integer> orderList = new ArrayList<>();
+
+      //for loop to iterate through tree
+      for (Node node = root;;)
+      {
+         //check if node is null
+         if (node == null)
+         {
+            //if stack is empty then break out of the loop
+            if (stack.empty()) break;
+
+            //if this point is reached pop the stack
+            node = stack.pop();
+            orderList.add(node.value); //add value to arraylist
+            node = node.right; //update node
+         }
+         else
+         {
+            stack.push(node); //add node to stack
+            node = node.left; //update node
+         }
+      }
+
+      //for loop to iterate through arraylist and print values
+       for (Integer integer : orderList) {
+           System.out.print(integer + " ");
+       }
    }
-   
    
    
    /*
@@ -165,7 +205,7 @@ public class TreeDemo{
       t1.insert(t1.root,90);
       t1.insert(t1.root,22);
             
-      System.out.print("in-order :   ");
+      System.out.print("in-order : ");
       t1.inOrderTraversal(t1.root);
       System.out.println();
            
